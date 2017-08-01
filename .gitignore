@@ -1,0 +1,15 @@
+sandbox
+dist
+.cabal-sandbox
+cabal.sandbox.config
+*.hi
+*.o
+*.hi-boot
+*.o-boot
+.stack-work
+demoSources
+error-log.txt
+*.sublime-project
+*.sublime-workspace
+hackage-test
+stackage-test
