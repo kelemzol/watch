@@ -17,20 +17,26 @@ extra-source-files:  ChangeLog.md
 cabal-version:       >=1.10
 
 library
+  exposed-modules:     Watch
+                     , Watch.Repr
   build-depends:       base >=4.9 && <4.10
                      , haskeline >=0.7 && <0.8
                      , directory >=1.3.0
                      , fsnotify >=0.2.1
+                     , optparse-applicative >= 0.13.2
+  hs-source-dirs:      src
   default-language:    Haskell2010
-  
+
 executable watch
   ghc-options:         -threaded
   main-is:             Main.hs
-  other-modules:       Mod
+  other-modules:       Watch
+                     , Watch.Repr
   other-extensions:    ViewPatterns, RecordWildCards
   build-depends:       base >=4.9 && <4.10
                      , haskeline >=0.7 && <0.8
                      , directory >=1.3.0
                      , fsnotify >=0.2.1
+                     , optparse-applicative >= 0.13.2
   hs-source-dirs:      src
   default-language:    Haskell2010
