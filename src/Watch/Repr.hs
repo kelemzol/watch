@@ -15,7 +15,19 @@ import System.Directory
 import System.FSNotify
 import System.IO
 import System.Environment
+import System.Process
 
+
+data WatchProcess = WatchProcess
+  { wPath :: String
+  , wProcessHandle :: ProcessHandle
+  , wStdin :: Handle
+  , wStdout :: Handle
+  , wNotifyMVar :: MVar [PE]
+  , wShutdown :: IO ()
+  }
+
+type Listener = PE -> IO ()
 
 data Opts = Opts
   { oSlave :: Bool
@@ -45,7 +57,7 @@ data PE
   | Add String
   | Rem String
   | Prt { fromPrt :: String }
-  deriving (Eq, Show)
+  deriving (Eq, Show, Read)
 
 isPrt :: PE -> Bool
 isPrt (Prt _) = True
