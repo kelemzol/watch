@@ -78,33 +78,3 @@ waitNotifies (WatchProcess {..}) = do
     takeMVar wNotifyMVar
 
 
-
-{-
-    -- collects changes that appear in a given timeframe
-    store <- newEmptyMVar
-    collectorThread <- forkIO $ forever $ void $ do
-        str <- hGetLine _watchStdOut
-        put <- tryPutMVar store [str] -- when the mvar is empty (this is the first change since last reload)
-        when (not put) $ modifyMVar_ store (return . (++ [str])) -- otherwise append
-    reloaderThread <- forkIO $ forever $ void $ do
-        firstChanges <- readMVar store
-        allChanges <- accumulateChanges store firstChanges
-        changedFiles <- catMaybes <$> mapM getChangedFile allChanges
-        let rel = ReLoad [] changedFiles []
-        when (not $ null changedFiles)
-          $ void $ modifyMVar daemonSess (\st -> swap <$> reflectGhc (runStateT (updateClient upClient rel) st) ghcSess)
-    let _watchThreads = [collectorThread, reloaderThread]
-    return WatchProcess { .. }
-  where accumulateChanges store previous = do
-          -- TODO: make this a parameter
-          threadDelay 100000 -- wait for 0.1 seconds
-          changes <- readMVar store
-          if changes == previous then takeMVar store
-                                 else accumulateChanges store changes
-        getChangedFile str =
-          case words str of
-            (["Mod", fn]) -> return (Just ({- get rid of escapes and quotes -} read fn))
-            (["Prt", _]) -> return Nothing -- package registered
-            _ -> do putStrLn $ "watch_e: word str wrong param: " ++ show (words str)
-                    return Nothing
--}
