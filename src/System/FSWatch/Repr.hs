@@ -1,20 +1,10 @@
-module Watch.Repr where
+module System.FSWatch.Repr where
 
-import Data.List
 
-import Control.Monad
-import Control.Monad.IO.Class
 import Control.Concurrent
-import Control.Concurrent.Chan
-import Control.Concurrent.MVar
 
-import System.Console.Haskeline
-import System.Console.Haskeline.History
-import System.Console.Haskeline.Completion
-import System.Directory
 import System.FSNotify
 import System.IO
-import System.Environment
 import System.Process
 
 

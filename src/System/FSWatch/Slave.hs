@@ -4,27 +4,23 @@
            , RecordWildCards
            #-}
 
-module Watch.Slave where
-
-import Data.List
-import Data.Semigroup ((<>))
+module System.FSWatch.Slave ( createWatchProcess
+                            , createWatchProcessWithListener
+                            , createWatchProcessWL
+                            , watch
+                            , stop
+                            , getNotifies
+                            , waitNotifies
+                            ) where
 
 import Control.Monad
 import Control.Monad.IO.Class
 import Control.Concurrent
-import Control.Concurrent.Chan
-import Control.Concurrent.MVar
-import Options.Applicative hiding (defaultPrefs)
 
-import System.Console.Haskeline
-import System.Console.Haskeline.History
-import System.Console.Haskeline.Completion
-import System.Directory
-import System.FSNotify
 import System.IO
 import System.Process
 
-import Watch.Repr
+import System.FSWatch.Repr
 
 
 createWatchProcess :: (MonadIO m) => String -> Int -> m WatchProcess
@@ -76,5 +72,3 @@ getNotifies (WatchProcess {..}) = do
 waitNotifies :: WatchProcess -> IO [PE]
 waitNotifies (WatchProcess {..}) = do
     takeMVar wNotifyMVar
-
-

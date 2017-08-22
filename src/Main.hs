@@ -1,7 +1,7 @@
 
 module Main where
 
-import Watch
+import System.FSWatch (watchMain)
 
 
 main :: IO ()

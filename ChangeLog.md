@@ -1,4 +1,4 @@
-# Revision history for watch
+# Revision history for fswatch
 
 ## 0.1.0.0  -- YYYY-mm-dd
 

@@ -3,7 +3,7 @@
            , RecordWildCards
            #-}
 
-module Watch where
+module System.FSWatch (watchMain, getOpts) where
 
 import Data.List
 import Data.Semigroup ((<>))
@@ -11,18 +11,15 @@ import Data.Semigroup ((<>))
 import Control.Monad
 import Control.Monad.IO.Class
 import Control.Concurrent
-import Control.Concurrent.Chan
-import Control.Concurrent.MVar
 import Options.Applicative hiding (defaultPrefs)
 
 import System.Console.Haskeline
 import System.Console.Haskeline.History
-import System.Console.Haskeline.Completion
 import System.Directory
 import System.FSNotify
 import System.IO
 
-import Watch.Repr
+import System.FSWatch.Repr
 
 optParser :: Parser Opts
 optParser = Opts
@@ -58,8 +55,8 @@ watchMain = do
     printFormat <- newMVar MultiRecord
     buffering <- newMVar $ case (oFixBufferMode opts, oDelayedBufferMode opts) of
       (0,0) -> NoNotifyBuffer
-      (i,0) -> FixTimeBuffer i
       (0,i) -> DelayedBuffer i
+      (i,_) -> FixTimeBuffer i
     mode <- newMVar CLI
     case oSlave opts of
         True -> do
@@ -252,4 +249,3 @@ printerOut (State {..}) pfm mv = do
 
 printP :: P -> String -> InputT IO ()
 printP (_,ch) = liftIO . writeChan ch . Prt
-
