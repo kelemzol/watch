@@ -1,6 +1,6 @@
 
 name:                fswatch
-version:             0.1.0.1
+version:             0.1.0.2
 synopsis:            File System watching tool with cli and slave functionalities.
 description:         File System watching tool with cli and slave lib (with os process) functionalities.
 category:            Filesystem
