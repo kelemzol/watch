@@ -8,14 +8,14 @@ module System.FSWatch (watchMain, getOpts) where
 import Data.List
 import Data.Semigroup ((<>))
 
-import Control.Monad
-import Control.Monad.IO.Class
 import Control.Concurrent
+import Control.Monad
+import Control.Monad.IO.Class (MonadIO(..))
 import Options.Applicative hiding (defaultPrefs)
 
 import System.Console.Haskeline
-import System.Console.Haskeline.History
-import System.Directory
+import System.Console.Haskeline.History (historyLines)
+import System.Directory (canonicalizePath)
 import System.FSNotify
 import System.IO
 

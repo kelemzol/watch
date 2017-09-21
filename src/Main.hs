@@ -6,4 +6,3 @@ import System.FSWatch (watchMain)
 
 main :: IO ()
 main = watchMain
-

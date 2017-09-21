@@ -1,12 +1,11 @@
 module System.FSWatch.Repr where
 
 
-import Control.Concurrent
+import Control.Concurrent (MVar, Chan)
 
-import System.FSNotify
-import System.IO
-import System.Process
-
+import System.FSNotify (WatchManager)
+import System.IO (IO, Handle)
+import System.Process (ProcessHandle)
 
 data WatchProcess = WatchProcess
   { wPath :: String

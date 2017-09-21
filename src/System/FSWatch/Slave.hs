@@ -13,14 +13,14 @@ module System.FSWatch.Slave ( createWatchProcess
                             , waitNotifies
                             ) where
 
-import Control.Monad
-import Control.Monad.IO.Class
 import Control.Concurrent
+import Control.Monad
+import Control.Monad.IO.Class (MonadIO(..))
 
 import System.IO
 import System.Process
 
-import System.FSWatch.Repr
+import System.FSWatch.Repr (PE, Listener, WatchProcess(..))
 
 
 createWatchProcess :: (MonadIO m) => String -> Int -> m WatchProcess
