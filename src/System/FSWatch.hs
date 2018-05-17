@@ -168,7 +168,7 @@ event2PE (Modified str _) = Mod str
 event2PE (Removed str _) = Rem str
 
 stop :: P -> String -> DB -> InputT IO ()
-stop p fn [] = printP p "no whatching this"
+stop p _ [] = printP p "no whatching this"
 stop p fn (DBE{..}:dbo) = if wfn /= fn then stop p fn dbo else liftIO (stopManager wman)
 
 startPrinter :: State -> MVar PrintFormat -> Chan PE -> IO (IO ())
@@ -177,8 +177,6 @@ startPrinter (State {..}) pfm ch = do
     noBufferClock <- newEmptyMVar
     fixBufferClock <- newEmptyMVar
     delayedBufferClock <- newEmptyMVar
-    bf <- readMVar buffering
-    lastBufferMode <- newMVar bf
 
     t1 <- forkIO $ void $ forever $ do
         e <- readChan ch
