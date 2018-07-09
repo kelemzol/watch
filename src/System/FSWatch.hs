@@ -163,9 +163,9 @@ watch p fn = liftIO $ do
     return man
 
 event2PE :: Event -> PE
-event2PE (Added str _) = Add str
-event2PE (Modified str _) = Mod str
-event2PE (Removed str _) = Rem str
+event2PE (Added str _ _) = Add str
+event2PE (Modified str _ _) = Mod str
+event2PE (Removed str _ _) = Rem str
 
 stop :: P -> String -> DB -> InputT IO ()
 stop p _ [] = printP p "no whatching this"
